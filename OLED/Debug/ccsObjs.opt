@@ -1,1 +1,1 @@
-"./i2c_oled.obj" "./main.obj" "./oled_lib.obj" "../lnk_msp430fr5994.cmd" -llibmpu_init.a -llibmath.a -llibc.a 
+"./i2c_oled.obj" "./main.obj" "./oled_lib.obj" "./pong.obj" "../lnk_msp430fr5994.cmd" -llibmpu_init.a -llibmath.a -llibc.a 

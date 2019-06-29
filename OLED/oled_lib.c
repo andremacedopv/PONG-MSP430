@@ -292,7 +292,7 @@ void printScore(uint32_t score[2]){
   }
 }
 
-void printGame(GameState game){
+void printGame(TGameState game){
   fillDisplay(0x00);
   printBall(game.ball);
   printPaddle(game.paddle, game.ball);

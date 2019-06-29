@@ -21,6 +21,6 @@ void printBall(TBall ball);
 void printPaddle(TPaddle paddle[], TBall ball);
 void printDivision(TBall ball);
 void printScore(uint32_t score[2]);
-void printGame(GameState game);
+void printGame(TGameState game);
 
 #endif /* SSD1306_LIB_H_ */

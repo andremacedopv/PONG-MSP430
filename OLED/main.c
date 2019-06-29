@@ -6,6 +6,13 @@
 #include "oled_lib.h"
 #include "pong.h"
 
+void delay(uint16_t time_us){
+    TA2CTL = TASSEL__SMCLK | MC__UP | TACLR;
+    TA2CCR0 = time_us;
+    while(!(TA2CCTL0 & CCIFG));
+    TA2CCTL0 &= ~CCIFG;
+}
+
 /*void insertBall(unsigned char d[2][48], uint8_t y){
   d[0][(y<<1)] = 1;
   d[0][(y<<1)+1] = 1;
@@ -96,22 +103,22 @@ int main(void) {
   //drawImage(0, 16, 128, 48, test, 1);
   //draw12x16Str(0, 16, "&",1);*/
 
-  GameState game;
-  game.ball.x = 43;
-  game.ball.y = 14;
-  game.paddle[0] = 8;
-  game.paddle[1] = 4;
-  game.score[0] = 3;
-  game.score[1] = 3;
-  printGame(game);
-  game.ball.x = 24;
-  game.ball.y = 16;
-  game.paddle[0] = 4;
-  game.paddle[1] = 9;
-  game.score[0] = 9;
-  game.score[1] = 1;
-  printGame(game);
 
-  while (1);
-
+//  printGame(game);
+  gameInit();
+  printGame(gameState);
+  delay(63000);
+  while (1){
+      i++;
+      if(i > 22){
+          i = 1;
+      }
+      updateGameState(i, i);
+      printGame(gameState);
+      delay(5000);
+      i++;
+      if(i > 22){
+          i = 1;
+      }
+  }
 }

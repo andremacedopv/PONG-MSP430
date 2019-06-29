@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/andre/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS
+CG_TOOL_ROOT := /home/danilo/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
@@ -11,6 +11,7 @@ ORDERED_OBJS += \
 "./i2c_oled.obj" \
 "./main.obj" \
 "./oled_lib.obj" \
+"./pong.obj" \
 "../lnk_msp430fr5994.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibmpu_init.a \
@@ -122,42 +123,42 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-OLED.out \
+OLED_MODULE.out \
 
 EXE_OUTPUTS__QUOTED += \
-"OLED.out" \
+"OLED_MODULE.out" \
 
 BIN_OUTPUTS += \
-OLED.hex \
+OLED_MODULE.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"OLED.hex" \
+"OLED_MODULE.hex" \
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "OLED.out"
+	@$(MAKE) --no-print-directory -Onone "OLED_MODULE.out"
 
 # Tool invocations
-OLED.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+OLED_MODULE.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: MSP430 Linker'
-	"/home/andre/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power=all --advice:hw_config=all --define=__MSP430FR5994__ --define=_MPU_ENABLE -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 -z -m"OLED.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"/home/andre/ti/ccs900/ccs/ccs_base/msp430/include" -i"/home/andre/ti/ccs900/ccs/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"/home/andre/ti/ccs900/ccs/ccs_base/msp430/lib/FR59xx" -i"/home/andre/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/lib" -i"/home/andre/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/include" --priority --reread_libs --define=_MPU_ENABLE --diag_wrap=off --display_error_number --warn_sections --xml_link_info="OLED_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "OLED.out" $(ORDERED_OBJS)
+	"/home/danilo/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power=all --advice:hw_config=all --define=__MSP430FR5994__ --define=_MPU_ENABLE -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 -z -m"OLED_MODULE.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"/home/danilo/ti/ccs900/ccs/ccs_base/msp430/include" -i"/home/danilo/ti/ccs900/ccs/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"/home/danilo/ti/ccs900/ccs/ccs_base/msp430/lib/FR59xx" -i"/home/danilo/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/lib" -i"/home/danilo/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/include" --priority --reread_libs --define=_MPU_ENABLE --diag_wrap=off --display_error_number --warn_sections --xml_link_info="OLED_MODULE_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "OLED_MODULE.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
-OLED.hex: $(EXE_OUTPUTS)
+OLED_MODULE.hex: $(EXE_OUTPUTS)
 	@echo 'Building files: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo 'Invoking: MSP430 Hex Utility'
-	"/home/andre/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/bin/hex430" --memwidth=8 --romwidth=8 -o "OLED.hex" $(EXE_OUTPUTS__QUOTED)
+	"/home/danilo/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/bin/hex430" --memwidth=8 --romwidth=8 -o "OLED_MODULE.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "i2c_oled.obj" "main.obj" "oled_lib.obj" 
-	-$(RM) "i2c_oled.d" "main.d" "oled_lib.d" 
+	-$(RM) "i2c_oled.obj" "main.obj" "oled_lib.obj" "pong.obj" 
+	-$(RM) "i2c_oled.d" "main.d" "oled_lib.d" "pong.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
