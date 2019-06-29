@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include "address.h"
 #include "font6x8.h"
 #include "font12x16.h"
 #include "oled_lib.h"
 #include "i2c_oled.h"
+#include "pong.h"
 
 volatile uint32_t i;
 unsigned char data [2];
@@ -60,7 +62,7 @@ void setCursor (unsigned char x, unsigned char p) {
     sendCommand(SSD1306_SET_PAGE_START_ADDRESS | p);
 }
 //******************************************************************************************************************************************
-void darwPixel (unsigned char x, unsigned char y, unsigned char clear) {
+void drawPixel(unsigned char x, unsigned char y, unsigned char clear) {
 
     if ((x >= SSD1306_WIDTH) || (y >= SSD1306_HEIGHT)) return;
     setCursor(x, y >> 3);
@@ -181,4 +183,119 @@ void draw12x16Str(unsigned char x, unsigned char y, const char str[],
     i++;
     x += 12;
   };
+}
+
+void printInit(){
+  draw6x8Str(0,0, "Pressione o anlogico para comecar", 1, 0);
+}
+
+void printDot(uint8_t x, uint8_t y){
+  x = (x<<1);
+  y = (y<<1) + 16;
+  drawPixel(x, y, 1);
+  drawPixel(x, y+1, 1);
+  drawPixel(x+1, y, 1);
+  drawPixel(x+1, y+1, 1);
+}
+
+void convertMatrix(unsigned char d[], unsigned char s[2][48]){
+  uint8_t aux;
+  int i,j,k,m;
+  m = 0;
+  for(i = 0; i < 48; i += 8){
+    for(j = 0; j < 2; j ++){
+      aux = 0;
+      for(k = 0; k < 8; k++){
+        aux |= (s[j][k+i]<<k);
+      }
+      d[m] = aux;
+      m++;
+    }
+  }
+}
+
+void insertDot(unsigned char d[2][48], uint8_t y){
+  d[0][(y<<1)] = 1;
+  d[0][(y<<1)+1] = 1;
+  d[1][(y<<1)] = 1;
+  d[1][(y<<1)+1] = 1;
+}
+
+void printBall(TBall ball){
+  unsigned char mat[2][48] = {{0}};
+  unsigned char vec[12];
+  insertDot(mat, ball.y);
+  convertMatrix(vec, mat);
+  drawImage(ball.x<<1, 16, 2, 48, vec, 1);
+}
+
+void printPaddle(TPaddle paddle[], TBall ball){
+  // Player 1
+  unsigned char mat[2][48] = {{0}};
+  unsigned char vec[12];
+  insertDot(mat, paddle[PLAYER1]);
+  if(paddle[PLAYER1] > 0){
+    insertDot(mat, paddle[PLAYER1]-1);
+  }
+  if(paddle[PLAYER1] < 23){
+    insertDot(mat, paddle[PLAYER1]+1);
+  }
+  if(ball.x == 0){
+    insertDot(mat, ball.y);
+  }
+  convertMatrix(vec, mat);
+  drawImage(0, 16, 2, 48, vec, 1);
+  
+  // Player 2
+  memset(mat, 0, sizeof(mat));
+  insertDot(mat, paddle[PLAYER2]);
+  if(paddle[PLAYER2] > 0){
+    insertDot(mat, paddle[PLAYER2]-1);
+  }
+  if(paddle[PLAYER2] < 23){
+    insertDot(mat, paddle[PLAYER2]+1);
+  }
+  if(ball.x == 63){
+    insertDot(mat, ball.y);
+  }
+  convertMatrix(vec, mat);
+  drawImage(126, 16, 2, 48, vec, 1);
+}
+
+void printDivision(TBall ball){
+  uint8_t i;
+  unsigned char mat[2][48] = {{0}};
+  unsigned char vec[12];
+  for(i=0; i < 24; i += 3){
+    insertDot(mat, i);
+    insertDot(mat, i+1);
+  }
+  if(ball.x == 32){
+    insertDot(mat, ball.y);
+  }
+  convertMatrix(vec, mat);
+  drawImage(64, 16, 2, 48, vec, 1);
+}
+
+void printScore(uint32_t score[2]){
+  char strScore[3];
+  // Draw P1 Score
+  sprintf(strScore,"%d",score[PLAYER1]);
+  draw12x16Str(24, 0, strScore, 1);
+  // Draw P2 Score
+  sprintf(strScore,"%d",score[PLAYER2]);
+  draw12x16Str(96, 0, strScore, 1);
+  // Draw Division
+  int i;
+  for(i=0; i < 9; i ++){
+    printDot(64, i<<1);
+  }
+}
+
+void printGame(GameState game){
+  fillDisplay(0x00);
+  printBall(game.ball);
+  printPaddle(game.paddle, game.ball);
+  printDivision(game.ball);
+  printScore(game.score);
 }
