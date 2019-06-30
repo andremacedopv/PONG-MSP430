@@ -221,12 +221,15 @@ void insertDot(unsigned char d[2][48], uint8_t y){
   d[1][(y<<1)+1] = 1;
 }
 
+static oldx = 64;
+
 void printBall(TBall ball){
   unsigned char mat[2][48] = {{0}};
   unsigned char vec[12];
   insertDot(mat, ball.y);
   convertMatrix(vec, mat);
   drawImage(ball.x<<1, 16, 2, 48, vec, 1);
+  oldx = ball.x<<1;
 }
 
 void printPaddle(TPaddle paddle[], TBall ball){
@@ -285,17 +288,17 @@ void printScore(uint32_t score[2]){
   // Draw P2 Score
   sprintf(strScore,"%d",score[PLAYER2]);
   draw12x16Str(96, 0, strScore, 1);
-  // Draw Division
-  int i;
-  for(i=0; i < 9; i ++){
-    printDot(64, i<<1);
-  }
 }
 
 void printGame(TGameState game){
-  fillDisplay(0x00);
+  unsigned char vazio[] = {
+    0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+  };
+  drawImage(oldx, 16, 2, 48, vazio, 1);
+  //fillDisplay(0x00);
   printBall(game.ball);
   printPaddle(game.paddle, game.ball);
   printDivision(game.ball);
   printScore(game.score);
 }
+
