@@ -78,7 +78,7 @@ void eraseBall(){
     uint8_t x, y;
     x = gameState.ball.x;
     y = gameState.ball.y;
-    if( (y == DIVIDERPOS) && ((x%2) == 0)){ // Verifica se é um píxel do divisor de área
+    if( (x == DIVIDERPOS) && ((y%2) == 0)){ // Verifica se é um píxel do divisor de área
         return;                             // Caso seja não apaga
     }
     else if(paddlePosition(x, y)){          // Verifica se é um píxel da raquete

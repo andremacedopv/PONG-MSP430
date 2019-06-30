@@ -290,15 +290,38 @@ void printScore(uint32_t score[2]){
   draw12x16Str(96, 0, strScore, 1);
 }
 
+void printPlayArea(){
+    uint8_t i, j, com;
+    uint8_t display[768];
+    uint32_t k;
+    for(k=0;k<768;k++){
+        display[k] = 0x00;
+    }
+
+    for(j=0; j<64; j++){
+        for(i=0; i<24; i++){
+            com = i>>2;
+            if(gameState.playArea[i][j]){
+                display[(com*128) + (j<<1)] |= 0x01<<((i<<1) - (com*8));
+                display[(com*128) + (j<<1)] |= 0x01<<((i<<1) - (com*8) + 1);
+                display[(com*128) + (j<<1) + 1] |= 0x01<<((i<<1) - (com*8));
+                display[(com*128) + (j<<1) + 1] |= 0x01<<((i<<1) - (com*8) + 1);
+            }
+        }
+    }
+    drawImage(0, 16, 128, 48, display, 1);
+}
+
 void printGame(TGameState game){
-  unsigned char vazio[] = {
+  /*unsigned char vazio[] = {
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
   };
   drawImage(oldx, 16, 2, 48, vazio, 1);
   //fillDisplay(0x00);
   printBall(game.ball);
   printPaddle(game.paddle, game.ball);
-  printDivision(game.ball);
+  printDivision(game.ball);*/
   printScore(game.score);
+  printPlayArea();
 }
 

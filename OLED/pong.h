@@ -20,7 +20,7 @@
 // Posições iniciais
 #define PADINITPOS 12 // Posição inicial da raquete
 #define BALLXINIT  32 // Posição inicial da bola no eixo x
-#define BALLYINIT  13 // Posição inicial da bola no eixo y
+#define BALLYINIT  12 // Posição inicial da bola no eixo y
 #define DIVIDERPOS 32 // Posição do divisor de área
 
 typedef struct TBall{
