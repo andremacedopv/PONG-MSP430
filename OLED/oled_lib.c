@@ -186,7 +186,7 @@ void draw12x16Str(unsigned char x, unsigned char y, const char str[],
 }
 
 void printInit(){
-  draw6x8Str(0,0, "Pressione o anlogico para comecar", 1, 0);
+  draw6x8Str(0,0, "Pressione um dos Joysticks Para Comecar", 1, 0);
 }
 
 void printDot(uint8_t x, uint8_t y){
@@ -284,10 +284,10 @@ void printScore(uint32_t score[2]){
   char strScore[3];
   // Draw P1 Score
   sprintf(strScore,"%d",score[PLAYER1]);
-  draw12x16Str(24, 0, strScore, 1);
+  draw12x16Str(0, 0, strScore, 1);
   // Draw P2 Score
   sprintf(strScore,"%d",score[PLAYER2]);
-  draw12x16Str(96, 0, strScore, 1);
+  draw12x16Str(64, 0, strScore, 1);
 }
 
 void printPlayArea(){
