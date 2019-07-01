@@ -4,6 +4,7 @@
 
 TGameState gameState;
 
+//******************************************************************************************************************************************
 void gameInit(){
     gameState.score[PLAYER1] = 0;
     gameState.score[PLAYER2] = 0;
@@ -14,13 +15,13 @@ void gameInit(){
     gameState.ball.dir = LFTUP;
     drawPlayArea();
 }
-
+//******************************************************************************************************************************************
 void updateGameState(uint8_t paddlePlayer1, uint8_t paddlePlayer2){
     movePaddle(PLAYER1, paddlePlayer1);
     movePaddle(PLAYER2, paddlePlayer2);
     moveBall();
 }
-
+//******************************************************************************************************************************************
 void drawPlayArea(){
     int i, j;
     for(i=0; i<HEIGHT; i++){
@@ -33,7 +34,7 @@ void drawPlayArea(){
     drawPaddle(PLAYER1);
     drawPaddle(PLAYER2);
 }
-
+//******************************************************************************************************************************************
 void drawPaddle(uint8_t player){
     uint8_t col, pos;
     if(player == PLAYER1){
@@ -51,7 +52,7 @@ void drawPaddle(uint8_t player){
     gameState.playArea[pos + ((PADHEI - 1) / 2)][col] = 1;
     gameState.playArea[pos - ((PADHEI - 1) / 2)][col] = 1;
 }
-
+//******************************************************************************************************************************************
 void erasePaddle(uint8_t player){
     uint8_t col, pos;
     if(player == PLAYER1){
@@ -69,11 +70,11 @@ void erasePaddle(uint8_t player){
     gameState.playArea[pos + ((PADHEI - 1) / 2)][col] = 0;
     gameState.playArea[pos - ((PADHEI - 1) / 2)][col] = 0;
 }
-
+//******************************************************************************************************************************************
 void drawBall(){
     gameState.playArea[gameState.ball.y][gameState.ball.x] = 1;
 }
-
+//******************************************************************************************************************************************
 void eraseBall(){
     uint8_t x, y;
     x = gameState.ball.x;
@@ -88,7 +89,7 @@ void eraseBall(){
         gameState.playArea[y][x] = 0;
     }
 }
-
+//******************************************************************************************************************************************
 void drawDivider(){
     int i;
     for(i=0; i<HEIGHT; i++){
@@ -97,7 +98,7 @@ void drawDivider(){
         }
     }
 }
-
+//******************************************************************************************************************************************
 void moveBall(){
     int8_t x, y;
     x = nextBallx();
@@ -123,7 +124,7 @@ void moveBall(){
         drawBall();           // Desenha a bola na nova posição
     }
 }
-
+//******************************************************************************************************************************************
 int nextBallx(){
     int x;
     switch (gameState.ball.dir){
@@ -151,7 +152,7 @@ int nextBallx(){
     }
     return x;
 }
-
+//******************************************************************************************************************************************
 int nextBally(){
     int y;
     switch (gameState.ball.dir){
@@ -179,7 +180,7 @@ int nextBally(){
     }
     return y;
 }
-
+//******************************************************************************************************************************************
 void reverseBallDir(){
     switch (gameState.ball.dir){
     case LFTSTR:
@@ -205,7 +206,7 @@ void reverseBallDir(){
     }
     return;
 }
-
+//******************************************************************************************************************************************
 void redirectBallDir(uint8_t x, uint8_t y){
     uint8_t posPlayer1, posPlayer2;
     posPlayer1 = gameState.paddle[PLAYER1];
@@ -247,7 +248,7 @@ void redirectBallDir(uint8_t x, uint8_t y){
         reverseBallDir();
     }
 }
-
+//******************************************************************************************************************************************
 void ballRespawn(uint8_t player){
     eraseBall();
     gameState.ball.x = BALLXINIT;
@@ -263,7 +264,7 @@ void ballRespawn(uint8_t player){
         return;
     }
 }
-
+//******************************************************************************************************************************************
 int paddlePosition(uint8_t x, uint8_t y){
     uint8_t pos, y1, y2, y3;
     pos = gameState.paddle[PLAYER1];
@@ -282,7 +283,7 @@ int paddlePosition(uint8_t x, uint8_t y){
     }
     return 0;
 }
-
+//******************************************************************************************************************************************
 void movePaddle(uint8_t player, uint8_t newPos){
     if(((player != PLAYER1) && (player != PLAYER2)) || (newPos < (0 + ((PADHEI - 1) / 2)))  || (newPos > (UPLIMIT - ((PADHEI - 1) / 2)))){
         return;

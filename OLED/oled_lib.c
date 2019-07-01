@@ -13,6 +13,7 @@ volatile uint32_t i;
 unsigned char data [2];
 unsigned char *TI_transmit_field;
 unsigned char *dataBuffer;
+static oldx = 64;
 
 //******************************************************************************************************************************************
 void ssd1306Init() {
@@ -184,11 +185,11 @@ void draw12x16Str(unsigned char x, unsigned char y, const char str[],
     x += 12;
   };
 }
-
+//******************************************************************************************************************************************
 void printInit(){
   draw6x8Str(0,0, "Pressione um dos Joysticks Para Comecar", 1, 0);
 }
-
+//******************************************************************************************************************************************
 void printDot(uint8_t x, uint8_t y){
   x = (x<<1);
   y = (y<<1) + 16;
@@ -197,7 +198,7 @@ void printDot(uint8_t x, uint8_t y){
   drawPixel(x+1, y, 1);
   drawPixel(x+1, y+1, 1);
 }
-
+//******************************************************************************************************************************************
 void convertMatrix(unsigned char d[], unsigned char s[2][48]){
   uint8_t aux;
   int i,j,k,m;
@@ -213,16 +214,14 @@ void convertMatrix(unsigned char d[], unsigned char s[2][48]){
     }
   }
 }
-
+//******************************************************************************************************************************************
 void insertDot(unsigned char d[2][48], uint8_t y){
   d[0][(y<<1)] = 1;
   d[0][(y<<1)+1] = 1;
   d[1][(y<<1)] = 1;
   d[1][(y<<1)+1] = 1;
 }
-
-static oldx = 64;
-
+//******************************************************************************************************************************************
 void printBall(TBall ball){
   unsigned char mat[2][48] = {{0}};
   unsigned char vec[12];
@@ -231,7 +230,7 @@ void printBall(TBall ball){
   drawImage(ball.x<<1, 16, 2, 48, vec, 1);
   oldx = ball.x<<1;
 }
-
+//******************************************************************************************************************************************
 void printPaddle(TPaddle paddle[], TBall ball){
   // Player 1
   unsigned char mat[2][48] = {{0}};
@@ -264,7 +263,7 @@ void printPaddle(TPaddle paddle[], TBall ball){
   convertMatrix(vec, mat);
   drawImage(126, 16, 2, 48, vec, 1);
 }
-
+//******************************************************************************************************************************************
 void printDivision(TBall ball){
   uint8_t i;
   unsigned char mat[2][48] = {{0}};
@@ -279,7 +278,7 @@ void printDivision(TBall ball){
   convertMatrix(vec, mat);
   drawImage(64, 16, 2, 48, vec, 1);
 }
-
+//******************************************************************************************************************************************
 void printScore(uint32_t score[2]){
   char strScore[3];
   // Draw P1 Score
@@ -289,7 +288,7 @@ void printScore(uint32_t score[2]){
   sprintf(strScore,"%d",score[PLAYER2]);
   draw12x16Str(64, 0, strScore, 1);
 }
-
+//******************************************************************************************************************************************
 void printPlayArea(){
     uint8_t i, j, com;
     uint8_t display[768];
@@ -311,7 +310,7 @@ void printPlayArea(){
     }
     drawImage(0, 16, 128, 48, display, 1);
 }
-
+//******************************************************************************************************************************************
 void printGame(TGameState game){
   /*unsigned char vazio[] = {
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -324,7 +323,7 @@ void printGame(TGameState game){
   printScore(game.score);
   printPlayArea();
 }
-
+//******************************************************************************************************************************************
 void endGame(){
   fillDisplay(0x00);
   draw6x8Str(0,0, "Jogo Finalizado!", 1, 0);
