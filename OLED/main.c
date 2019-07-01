@@ -26,54 +26,30 @@ int main(void) {
 
   confiAnalogPins();
 
-  printInit();
-  while((P3IN & BIT6) && (P3IN & BIT7));
-  delay(5000);
 
-  fillDisplay(0x00);
-
-  gameInit();
-  printGame(gameState);
-
-  /*int n=1, m=-1;
-  uint8_t i;
-  int j=12;
-  i = 12;*/
   TPaddle *pad;
+while(1){
+      printInit();
+      while((P3IN & BIT6) && (P3IN & BIT7));
+      delay(5000);
 
-  while (1){
+      fillDisplay(0x00);
 
-      pad = updatePaddles();
-      updateGameState(pad[PLAYER1], pad[PLAYER2]);
+      gameInit();
       printGame(gameState);
-      free(pad);
-      if(!(P3IN & BIT6) || !(P3IN & BIT7))
-          break;
-      /*if(i > 22){
-          n = -1;
-          i += n;
-      }
-      else if(i < 1){
-          n = 1;
-          i = 1 + n;
-      }
-      else{
-          i += n;
-      }
-      if(j > 22){
-          m = -1;
-          j += m;
-      }
-      else if(j < 1){
-          m = 1;
-          j = 1 + m;
-      }
-      else{
-          j += m;
-      }*/
-  }
+      while ((P3IN & BIT6) && (P3IN & BIT7)){
 
-  endGame();
+          pad = updatePaddles();
+          updateGameState(pad[PLAYER1], pad[PLAYER2]);
+          printGame(gameState);
+          free(pad);
 
+      }
+
+      endGame();
+      while((P3IN & BIT6) && (P3IN & BIT7));
+      delay(5000);
+      fillDisplay(0x00);
+}
   return 0;
 }
