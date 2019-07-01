@@ -325,3 +325,18 @@ void printGame(TGameState game){
   printPlayArea();
 }
 
+void endGame(){
+  fillDisplay(0x00);
+  draw6x8Str(0,0, "Jogo Finalizado!", 1, 0);
+
+  char strScore[3];
+  // Draw P1 Score
+  sprintf(strScore,"%d",gameState.score[PLAYER1]);
+  draw12x16Str(0, 16, "P1:", 1);
+  draw12x16Str(0, 32, strScore, 1);
+  // Draw P2 Score
+  sprintf(strScore,"%d",gameState.score[PLAYER2]);
+   draw12x16Str(64, 16, "P2:", 1);
+  draw12x16Str(64, 32, strScore, 1);
+}
+

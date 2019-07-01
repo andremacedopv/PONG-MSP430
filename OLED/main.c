@@ -47,6 +47,8 @@ int main(void) {
       updateGameState(pad[PLAYER1], pad[PLAYER2]);
       printGame(gameState);
       free(pad);
+      if(!(P3IN & BIT6) || !(P3IN & BIT7))
+          break;
       /*if(i > 22){
           n = -1;
           i += n;
@@ -71,4 +73,7 @@ int main(void) {
       }*/
   }
 
+  endGame();
+
+  return 0;
 }

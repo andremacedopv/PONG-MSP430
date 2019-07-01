@@ -23,5 +23,6 @@ void printDivision(TBall ball);
 void printScore(uint32_t score[2]);
 void printPlayArea();
 void printGame(TGameState game);
+void endGame();
 
 #endif /* SSD1306_LIB_H_ */
